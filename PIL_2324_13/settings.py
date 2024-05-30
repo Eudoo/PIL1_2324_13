@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'app_1'
 ]
 
+AUTHENTICATION_BACKENDS =[
+    'django.contrib.auth.backends.ModelBackend',  #Pour le back_end de base de django
+    'app_1.backends.Pseudo_Email_Backend',        #Pour le back_end personnalisé
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,8 +81,12 @@ WSGI_APPLICATION = 'PIL_2324_13.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'database_pil_13',
+        'USER': 'eudes',
+        'PASSWORD': 'ciccada3301',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

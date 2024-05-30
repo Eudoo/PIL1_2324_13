@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profil</title>
+    </head>
+    <body>
+        <h1>Bienvenue, {{ user.username }}</h1>
+        <p>Email: {{ user.email }}</p>
+        <p>Date de naissance: {{ user.profile.date_naissance }}</p>
+        <p>Bio: {{ user.profile.bio }}</p>
+        <a href="{% url'vue_deconnexion %}">Déconnexion</a>
+    </body>
+</html>

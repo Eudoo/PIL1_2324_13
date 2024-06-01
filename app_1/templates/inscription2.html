@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>inscription_2</title>
+    </head>
+
+    <body>
+        <h2>Terminez votre inscription !</h2>
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Inscription</button>
+        </form>
+    </body>
+</html>

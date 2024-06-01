@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
-    date_naissance = models.DateField(null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    sexe = models.CharField(max_length=8, choices=[('Homme', 'Homme'), ('Femme', 'Femme')], null=True)
     bio = models.TextField(blank=True)
     localisation = models.CharField(max_length=70, blank=True)
-    interet = models.ManyToManyField('Interest', blank=True)
-    photo_de_profil = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    interet = models.ManyToManyField('Interest')
+    photo_de_profil = models.ImageField(upload_to='profile_pictures/', null=True)
 
     def __str__(self) :
         return self.utilisateur.username

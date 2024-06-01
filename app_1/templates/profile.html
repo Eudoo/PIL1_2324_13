@@ -4,10 +4,20 @@
         <title>Profil</title>
     </head>
     <body>
-        <h1>Bienvenue, {{ user.username }}</h1>
-        <p>Email: {{ user.email }}</p>
-        <p>Date de naissance: {{ user.profile.date_naissance }}</p>
-        <p>Bio: {{ user.profile.bio }}</p>
-        <a href="{% url'vue_deconnexion %}">Déconnexion</a>
+        <h1>Profil de {{ utilisateur.username }}</h1>
+        <p>Email: {{ utilisateur.email }}</p>
+        <p>Age: {{ utilisateur.profile.age }}</p>
+        <p>Sexe : {{ utilisateur.profile.sexe }}</p>
+        <p>Bio: {{ utilisateur.profile.bio }}</p>
+        <p>Localisation : {{ utilisateur.profile.localisation }}</p>
+        <p>Intérêts : 
+            {% for interet in utilisateur.profile.interet.all %}
+                {{ interet.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% if utilisateur.profile.photo_de_profil %}
+            <img src="{{ utilisateur.profile.photo_de_profil.url }}" alt="Photo de profil">
+        {% endif %}
+        <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
     </body>
 </html>

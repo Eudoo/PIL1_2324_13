@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Résultats de la recherche</title>
+</head>
+
+<body>
+    <h1>Resultats des recherches</h1>
+    {% if query %}
+        <p>Recherche pour "{{ query }}" :</p>
+        <ul>
+            {% for user in results %}
+                <li>{{ user.username }}</li>
+            {% empty %}
+                <li>Aucun utilisateur trouvé.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Veuillez entrer un terme de recherche.</p>
+    {% endif %}
+    <a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
+</body>
+</html>

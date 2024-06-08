@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Recommandations de partenaires</h2>
+<ul>
+    {% for recommandation in recommandations %}
+        <li>
+            <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
+            <p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p>
+            <p>{{ recommandation.sexe }}</p>
+            <p>Intérêts :
+                {% for interet in recommandation.interet.all %}
+                    {{ interet.name }},
+                {% endfor %}
+            </p>
+            <p>{{ recommandation.bio }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

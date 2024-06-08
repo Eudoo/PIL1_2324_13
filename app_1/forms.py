@@ -13,6 +13,11 @@ class Inscription1Form(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_first_name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_last_name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'id': 'id_email'}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -24,16 +29,22 @@ class Inscription1Form(forms.ModelForm):
         return cleaned_data
 
 class Inscription2Form(forms.ModelForm):
-
-    username = forms.CharField(max_length=50)
-    age = forms.IntegerField(required=True, label="Age")
-
+    username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    age = forms.IntegerField(required=True, label="Âge", widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    sexe = forms.ChoiceField(choices=[('Homme', 'Homme'), ('Femme', 'Femme'), ('Autre', 'Autre')], widget=forms.Select(attrs={'class': 'form-control'}))
+    interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=True)
+    photo_de_profil = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=True)
+    localisation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
+    
     class Meta:
         model = Profile
-        fields = ['age', 'sexe', 'interet', 'photo_de_profil']
+        fields = ['username','age', 'sexe', 'interet', 'photo_de_profil', 'bio', 'localisation']
 
-    interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
-    photo_de_profil = forms.ImageField(required=True)
+    interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=True)
+    photo_de_profil = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=True)
+    localisation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
 
     def __init__(self, *args, **kwargs):
         super(Inscription2Form, self).__init__(*args, **kwargs)
@@ -42,15 +53,9 @@ class Inscription2Form(forms.ModelForm):
         self.fields['sexe'].widget.attrs.update({'class': 'form-control'})
         self.fields['interet'].widget.attrs.update({'class': 'form-control'})
         self.fields['photo_de_profil'].widget.attrs.update({'class': 'form-control'})
-
-        self.fields = {
-            'username': self.fields['username'],
-            'age': self.fields['age'],
-            'sexe': self.fields['sexe'],
-            'interet': self.fields['interet'],
-            'photo_de_profil': self.fields['photo_de_profil'],
-        }
-
+        self.fields['bio'].widget.attrs.update({'class': 'form-control'})
+        self.fields['localisation'].widget.attrs.update({'class': 'form-control'})
+    
 class ConnexionUserForm(forms.Form):
     pseudo = forms.CharField(label='Pseudo ou Email', widget=forms.TextInput(attrs={'class': 'form-control'}))
     mot_de_passe = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'class': 'form-control'}))

@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm
+from .recommendations import recommander_partenaires
 
 User = get_user_model()
 
@@ -59,7 +60,8 @@ def vue_connexion(request):
             utilisateur = form.get_user()
             if utilisateur is not None:
                 login(request, utilisateur)
-                return redirect('vue_profile')
+                #return redirect('vue_profile')
+                return redirect('vue_base')
             else:
                 print("Utilisateur non trouvé")
         else:
@@ -68,11 +70,26 @@ def vue_connexion(request):
         form = ConnexionUserForm()
     return render(request, 'connexion.html', {'form': form})
 
-@login_required
 def vue_deconnexion(request):
     logout(request)
     return redirect('vue_connexion')
 
-@login_required
 def vue_profile(request):
     return render(request, 'profile.html', {'utilisateur': request.user})
+
+def vue_recommandations(request):
+    utilisateur = request.user
+    recommandations = recommander_partenaires(utilisateur)
+    return render(request, 'recommandations.html', {'recommandations':recommandations})
+
+@login_required
+def vue_base(request):
+    return render(request, 'base.html')
+
+def vue_recherche(request):
+    query = request.GET.get('q')
+    if query:
+        results = User.objects.filter(username__icontains=query)
+    else:
+        results = User.objects.none()
+    return render(request, 'recherche.html', {'results':results, 'query':query})

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>inscription_2</title>
-    </head>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inscription2 - Love Alarm</title>
+    {% load static %}
+    <link rel="stylesheet" href="../static/css/inscription2.css">
+</head>
 
-    <body>
-        <h2>Terminez votre inscription !</h2>
-        <form method="post" enctype="multipart/form-data" novalidate>
+<body>
+    <div class="container">
+        <h1>Finalisez votre inscription sur 𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+        <form method="post" enctype="multipart/form-data" novalidate></formmethod>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Inscription</button>
+            <button type="submit">S'inscrire</button>
         </form>
-    </body>
+    </div>
+</body>
 </html>

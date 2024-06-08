@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Mon site{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur mon site</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'vue_profile' %}">Profil</a></li>
+                <li><a href="{% url 'vue_recommandations' %}">Recommandations</a></li>
+            </ul>
+            <form action="{% url 'vue_recherche' %}" method="get">
+                <input type="text" name="q" placeholder="Rechercher un utilisateur">
+                <button type="submit">Rechercher</button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Contenu spécifique de chaque page sera inséré ici -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mon site</p>
+    </footer>
+</body>
+</html>

@@ -1,14 +1,39 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Connexion</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Alarm-connexion</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
 </head>
+
 <body>
-    <h2>Connexion</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Se connecter</button>
-    </form>
+    <div class="login-container">
+        <h1 style="color: rgb(152, 5, 5) ;">Connexion à 𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.pseudo.label_tag }}
+                {{ form.pseudo }}
+            </div>
+            <div class="form-group">
+                {{ form.mot_de_passe.label_tag }}
+                {{ form.mot_de_passe }}
+            </div>
+            <div class="form-group">
+                <button type="submit">Se connecter</button>
+            </div>
+            
+        </form>
+
+        
+    </div>
+    <footer>
+        <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶- Le site de rencontre qui sonne votre amour</p>
+    </footer>
+    
+   
 </body>
 </html>

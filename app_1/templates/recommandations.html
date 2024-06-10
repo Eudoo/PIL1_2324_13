@@ -3,17 +3,28 @@
 {% block content %}
 <h2>Recommandations de partenaires</h2>
 <ul>
-    {% for recommandation in recommandations %}
+    {% for recommandation, has_liked in recommandations_data %}
         <li>
             <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
             <p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p>
             <p>{{ recommandation.sexe }}</p>
             <p>Intérêts :
                 {% for interet in recommandation.interet.all %}
-                    {{ interet.name }},
+                    {{ interet.name }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
             <p>{{ recommandation.bio }}</p>
+            <a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a>
+            <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if has_liked %}
+                        Je n'aime plus
+                    {% else %}
+                        J'aime
+                    {% endif %}
+                </button>
+            </form>
         </li>
     {% endfor %}
 </ul>

@@ -11,6 +11,7 @@
         <ul>
             {% for user in results %}
                 <li>{{ user.username }}</li>
+                <a href="{% url 'vue_profile_partenaire' user.username %}">Voir le profil</a>
             {% empty %}
                 <li>Aucun utilisateur trouvé.</li>
             {% endfor %}

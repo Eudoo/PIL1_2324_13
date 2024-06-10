@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm
 from .recommendations import recommander_partenaires
+from .models import Like
 
 User = get_user_model()
 
@@ -80,7 +81,13 @@ def vue_profile(request):
 def vue_recommandations(request):
     utilisateur = request.user
     recommandations = recommander_partenaires(utilisateur)
-    return render(request, 'recommandations.html', {'recommandations':recommandations})
+
+    recommandations_data = []
+    for recommandation in recommandations:
+        has_liked = Like.objects.filter(liker=request.user, liked=recommandation.utilisateur).exists()
+        recommandations_data.append((recommandation, has_liked))
+        
+    return render(request, 'recommandations.html', {'recommandations_data':recommandations_data})
 
 @login_required
 def vue_base(request):
@@ -93,3 +100,14 @@ def vue_recherche(request):
     else:
         results = User.objects.none()
     return render(request, 'recherche.html', {'results':results, 'query':query})
+
+def vue_profile_partenaire(request, username):
+    utilisateur = get_object_or_404(User, username=username)
+    return render(request, 'profile_partenaire.html', {'utilisateur': utilisateur})
+
+def vue_like_profile(request, user_id):
+    user_to_like = get_object_or_404(User, id=user_id)
+    like, created = Like.objects.get_or_create(liker=request.user, liked=user_to_like)
+    if not created:
+        like.delete()
+    return redirect('vue_recommandations')

@@ -42,3 +42,13 @@ class Conversation(models.Model):
     def __str__(self):
         return f'Conversation entre {", ".join(utilisateur.username for utilisateur in self.intervenants.all())}'
     
+class Like(models.Model):
+    liker = models.ForeignKey(User, related_name='like_donné', on_delete=models.CASCADE)
+    liked = models.ForeignKey(User, related_name='like_recu', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('liker', 'liked')
+
+    def __str__(self):
+        return f'{self.liker.username} likes {self.liked.username}'

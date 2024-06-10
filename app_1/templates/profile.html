@@ -16,8 +16,9 @@
                 {{ interet.name }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
+        <p>Nombre de J'AIME : {{ utilisateur.like_recu.count }}</p>
         
-        <img src="{{ utilisateur.profile.photo_de_profil.url }}" alt="Photo de profil">
+        <img src="{{ utilisateur.profile.photo_de_profil.url }}" alt="Photo de profil" width="500">
         <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
     </body>
 </html>

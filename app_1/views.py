@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm
 from .recommendations import recommander_partenaires
+from .models import Like
 
 User = get_user_model()
 

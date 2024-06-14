@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_1'
+    'app_1',
+    'chatapp',
+    'channels',
 ]
 
 AUTHENTICATION_BACKENDS =[
@@ -75,7 +77,17 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'PIL_2324_13.asgi.application'
 WSGI_APPLICATION = 'PIL_2324_13.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -85,8 +97,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'database_pil_13',
-        'USER': 'eudes',
-        'PASSWORD': 'ciccada3301',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -128,7 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app_1/static'),
+    os.path.join(BASE_DIR, 'chatapp/static')
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'chatapp/css/message.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>chat with | Love Alarm ©</title>
+</head>
+<body>
+    <header>
+        <div class="titre">
+            <h1><a href="">LOVE ALARM</a></h1>
+        </div>
+    </header>
+
+    <main class="global">
+        <!-- Liste des utilisateurs -->
+        <aside class="liste_discu">
+            <div class="nav">
+                <a class="retour" href=""><img src="{% static 'chatapp/img/icone/chevron-left.svg' %}" alt="Retour"></a>
+                <div class="formu">
+                    <form class="recherche">
+                        <input type="text" name="search" id="search" placeholder="Rechercher un utilisateur" aria-label="Rechercher un utilisateur">
+                        <button type="submit" aria-label="Rechercher"><img src="{% static 'chatapp/img/icone/search.svg' %}" alt="Rechercher"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="utilisateurs">
+                <ul class="liste">
+                    {% for room in rooms %}
+                        <li class="un_utilisateur" data-id="{{ room.utilisateur.id }}">
+                            {% if room.photo_de_profil %}
+                                <img src="{{  room.photo_de_profil.url }}" alt="" width="35px" height="35px"  usemap="#im1">
+                            {% else %}
+                                <img src="{% static 'chatapp/img/image/default_profile_picture.jpeg' %}" alt="Photo de profil par défaut" width="35px" height="35px">
+                            {% endif %}
+                            <span class="nom"><a href="{% url 'chat' room.utilisateur.username %}">{{ room.utilisateur.username }}</a></span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Discussion courante -->
+        <div class="discu_courante">
+            <div class="conversation" aria-live="polite"></div>
+        </div>
+    </main>
+</body>
+</html>

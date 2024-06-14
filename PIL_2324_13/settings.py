@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app_1',
 ]
 
+
 AUTHENTICATION_BACKENDS =[
     'django.contrib.auth.backends.ModelBackend',  #Pour le back_end de base de django
     'app_1.backends.Pseudo_Email_Backend',        #Pour le back_end personnalisé
@@ -85,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'database_pil_13',
-        'USER': 'eudes',
-        'PASSWORD': 'ciccada3301',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }

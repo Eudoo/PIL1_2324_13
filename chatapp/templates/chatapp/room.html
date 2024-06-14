@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'chatapp/css/message.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>{{ user2.username }}| Love Alarm ©</title>
+</head>
+<body>
+    <header>
+        <div class="titre">
+            <h1><a href="">LOVE ALARM</a></h1>
+        </div>
+    </header>
+
+    <main class="global">
+        <!-- utilisateur -->
+        <aside class="liste_discu">
+            <div class="nav">
+                <a class="retour" href="{% url 'retour' %}"><img src="{% static 'chatapp/img/icone/chevron-left.svg' %}" alt="Retour"></a>
+                <div class="formu">
+                    <form class="recherche">
+                        <input type="text" name="search" id="search" placeholder="Rechercher un utilisateur" aria-label="Rechercher un utilisateur">
+                        <button type="submit" aria-label="Rechercher"><img src="{% static 'chatapp/img/icone/search.svg' %}" alt="Rechercher"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="utilisateurs">
+                <ul class="liste">
+                    <li class="un_utilisateur" data-id="{{ user2.id }}">
+                        {% if profile2.photo_de_profil %}
+                            <img src="{{ profile2.photo_de_profil.url }}" alt="" width="35px" height="35px"  usemap="#im1">
+                        {% else %}
+                            <img src="{% static 'chatapp/img/image/default_profile_picture.jpeg' %}" alt="Photo de profil par défaut" width="35px" height="35px">
+                        {% endif %}
+                        <span class="nom"><a href="">{{ user2.username }}</a></span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Discussion courante -->
+        <div class="discu_courante">
+            <!--container chat-->
+            <div id="scrollableDiv" class="chat-container">
+                <div class="messages" id="chat-log">
+                    {% for message in messages %}
+                        <div class="message {% if message.sender == user1 %}user1{% else %}user2{% endif %}">
+                            {{ message.content }} <br>
+                            <div class="small"><small>{{ message.date }}</small></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </id=>
+            <div class="envoie">
+                <div class="d1">
+                    <button class="scroll" onclick="scrollToBottom()">Scroll Down</button>
+                </div>
+                <div class="d2">
+                    <form id="chat-form"  method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="emetteur_id" value="">
+                        <input type="hidden" name="destinataire_id" id="destinataire_id">
+                        <input type="text" name="contenu" id="messageInput" placeholder="Ecrivez votre message" aria-label="Ecrivez votre message">
+                        <button type="submit" aria-label="Envoyer"><img src="{% static 'chatapp/img/icone/send.svg' %}" alt="Envoyer" width="30" height="30"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static "chatapp/js/script.js" %}"></script>
+
+</body>
+</html>

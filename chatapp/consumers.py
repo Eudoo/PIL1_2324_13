@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
+from .models import Messages
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -26,6 +27,9 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         sender = text_data_json['sender']
+
+        # Enregistrer le message dans la base de données
+        Messages.objects.create(chatRoom=self.room_name, sender=sender, content=message)
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

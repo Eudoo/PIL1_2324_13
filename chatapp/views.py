@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
 from .models import Messages, Room
 from app_1.models import Profile
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -30,4 +31,11 @@ def chat(request, username):
         content = request.POST.get('contenu')
         if content:
             Messages.objects.create(chatRoom=chatRoom, sender=user1, receiver=user2, content=content)
+
+    # Vérifier si la demande est effectuée via AJAX
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        last_message_id = request.GET.get('last_message_id')
+        new_messages = Messages.objects.filter(chatRoom=chatRoom, id__gt=last_message_id).order_by('date')
+        return render(request, 'chatapp/new_messages.html', {'messages': new_messages})
+
     return render(request, 'chatapp/room.html', {'chatRoom': chatRoom, 'messages': messages, 'user1': request.user, 'user2': user2, 'profile2': profile2})

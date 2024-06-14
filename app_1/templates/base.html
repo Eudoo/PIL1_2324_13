@@ -1,32 +1,65 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>{% block title %}Mon site{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Alarm - Rencontrez des membres</title>
+    {% load static %}
+    <link rel="stylesheet" href="../static/css/base.css">
 </head>
+
 <body>
     <header>
-        <h1>Bienvenue sur mon site</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'vue_profile' %}">Profil</a></li>
-                <li><a href="{% url 'vue_recommandations' %}">Recommandations</a></li>
-                <li><a href="{% url 'vue_deconnexion' %}">Déconnexion</a></li>
-            </ul>
-            <form action="{% url 'vue_recherche' %}" method="get">
+        <div class="container">
+            <strong > <h1  style="color: rgb(152, 5, 5) " style="logo">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1></strong>
+            <nav>
+                <a href="{% url 'vue_profile' %}">Profil</a>
+                <a href="{% url 'vue_recommandations' %}">Recommandations</a>
+                <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <aside class="sidebar">
+            <h2>Rechercher des membres</h2>
+            <form action="{% url 'vue_recherche' %}" method="get" class="search">
                 <input type="text" name="q" placeholder="Rechercher un utilisateur">
                 <button type="submit">Rechercher</button>
             </form>
-        </nav>
-    </header>
+        </aside>
+        <section class="main-content">
+            
+            {% block content %}
+            <!-- Contenu spécifique de chaque page sera inséré ici -->
+            {% endblock %}
 
-    <main>
-        {% block content %}
-        <!-- Contenu spécifique de chaque page sera inséré ici -->
-        {% endblock %}
+            <div class="profile-card">
+                <img src="terre.jpg" alt="Profil 1">
+                <h3>Alice, 25</h3>
+                <p>Calavi, Bénin</p>
+                <button>Envoyer un message</button>
+            </div>
+            <div class="profile-card">
+                <img src="couplerouge.jpg" alt="Profil 2">
+                <h3>David, 29</h3>
+                <p>porto-novo, Bénin</p>
+                <button>Envoyer un message</button>
+            </div>
+            
+        </section>
+        
     </main>
-
     <footer>
-        <p>&copy; 2024 Mon site</p>
+        <div class="container">
+            <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶- Le site de rencontre qui sonne votre amour</p>
+            <nav>
+                <a href="#">À propos</a>
+                <a href="#">Contact</a>
+                <a href="#">Confidentialité</a>
+            </nav>
+        </div>
     </footer>
 </body>
 </html>

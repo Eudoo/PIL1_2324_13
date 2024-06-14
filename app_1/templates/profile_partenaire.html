@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Profil de {{ utilisateur.username }}</title>
-</head>
-<body>
-    <h1>Profil de {{ utilisateur.username }}</h1>
-    <p>Nom : {{ utilisateur.first_name }} {{ utilisateur.last_name }}</p>
-    <p>Email: {{ utilisateur.email }}</p>
-    <p>Age: {{ utilisateur.profile.age }}</p>
-    <p>Sexe : {{ utilisateur.profile.sexe }}</p>
-    <p>Bio: {{ utilisateur.profile.bio }}</p>
-    <p>Localisation : {{ utilisateur.profile.localisation }}</p>
-    <p>Intérêts : 
-        {% for interet in utilisateur.profile.interet.all %}
-            {{ interet.name }}{% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </p>
-    <img src="{{ utilisateur.profile.photo_de_profil.url }}" alt="Photo de profil" width="500">
-</body>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profil</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/profile_partenaire.css' %}">
+    </head>
+
+    <body>
+        <main>
+            <h1>Profil de {{ utilisateur.username }}</h1>
+            <section>
+                <img src="{{ utilisateur.profile.photo_de_profil.url }}" alt="Photo de profil" width="500">
+                <div>
+                    <p><span>Nom :</span> {{ utilisateur.first_name }} {{ utilisateur.last_name }}</p>
+                    <p><span>Email :</span> {{ utilisateur.email }}</p>
+                    <p><span>Age :</span> {{ utilisateur.profile.age }} ans</p>
+                    <p><span>Sexe :</span> {{ utilisateur.profile.sexe }}</p>
+                    <p><span>Intérêts :</span> 
+                        {% for interet in utilisateur.profile.interet.all %}
+                            {{ interet.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p><span>Localisation :</span> {{ utilisateur.profile.localisation }}</p>
+                    <p><span>Bio :</span> {{ utilisateur.profile.bio }}</p>
+                    <p><span>Nombre de J'AIME :</span> {{ utilisateur.like_recu.count }} Likes</p>
+                </div>
+                
+            </section>
+        </main>
+        
+    </body>
 </html>

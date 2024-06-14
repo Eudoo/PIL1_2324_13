@@ -1,0 +1,159 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: white;
+    color: white;
+    padding: 7px;
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a, nav button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    color: rgb(199, 9, 9);
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+nav button {
+    background-color: white;
+    color: #b4060c;
+    border-radius: 5px;
+}
+
+nav button:hover {
+    background-color: #b20707;
+    color: white;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.sidebar {
+    width: 25%;
+    height: 400px;
+    background-color: rgb(252, 226, 226);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #3316f0;
+    border-radius: 5px;
+}
+
+.search button {
+    width: 100%;
+    padding: 10px;
+    background-color: #451ff1;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: #998888;
+}
+
+.main-content {
+    width: 63%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.profile-card {
+    width: 48%;
+    background-color: #cfa9a9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.profile-card img {
+    width: 170px;
+    border-radius: 50%;
+    height: 170px;
+    object-fit:cover;
+}
+
+.profile-card h3 {
+    margin: 10px 0;
+}
+
+.profile-card span {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.profile-card button {
+    background-color: #ad1015;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-card .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.profile-card .button a{
+    text-decoration: none;
+    color: white;
+}
+
+.profile-card .button button:hover {
+    background-color: #aa690d;
+}
+
+
+footer {
+    background-color: #956d6f;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+footer nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+

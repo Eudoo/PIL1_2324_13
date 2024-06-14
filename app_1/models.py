@@ -37,7 +37,7 @@ class Message(models.Model):
 
 class Conversation(models.Model):
     intervenants = models.ManyToManyField(User, related_name='conversations')
-    demarrée_le = models.DateTimeField(auto_now=True)
+    demarree_le = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Conversation entre {", ".join(utilisateur.username for utilisateur in self.intervenants.all())}'

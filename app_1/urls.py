@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import vue_connexion, vue_deconnexion,vue_profile, accueil, vue_inscription1, vue_inscription2, vue_recommandations, vue_base, vue_recherche, vue_profile_partenaire, vue_like_profile
+from .views import vue_connexion, vue_deconnexion,vue_profile, accueil, vue_inscription1, vue_inscription2
+from .views import vue_recommandations, vue_base, vue_recherche, vue_profile_partenaire, vue_like_profile
+
 
 
 urlpatterns = [

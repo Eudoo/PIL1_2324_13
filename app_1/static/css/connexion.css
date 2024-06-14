@@ -8,12 +8,16 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     background: linear-gradient( to bottom, rgb(255,255, 255, 0), rgba(255,255,255,1) ), url("../images/plage.jpg") repeat;
-    
     position: relative;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: red;
 }
 
 

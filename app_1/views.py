@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm
 from .recommendations import recommander_partenaires
-from .models import Like
 
 User = get_user_model()
 
@@ -61,7 +60,6 @@ def vue_connexion(request):
             utilisateur = form.get_user()
             if utilisateur is not None:
                 login(request, utilisateur)
-                #return redirect('vue_profile')
                 return redirect('vue_base')
             else:
                 print("Utilisateur non trouvé")

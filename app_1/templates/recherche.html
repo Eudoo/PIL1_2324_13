@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Résultats de la recherche</title>
-</head>
+{% extends "base.html" %}
 
-<body>
-    <h1>Resultats des recherches</h1>
-    {% if query %}
-        <p>Recherche pour "{{ query }}" :</p>
-        <ul>
-            {% for user in results %}
-                <li>{{ user.username }}</li>
-                <a href="{% url 'vue_profile_partenaire' user.username %}">Voir le profil</a>
-            {% empty %}
-                <li>Aucun utilisateur trouvé.</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Veuillez entrer un terme de recherche.</p>
-    {% endif %}
-    <a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
-</body>
-</html>
+{% block content %}
+
+{% if query %}
+    <style>
+        .see-profile a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+    <h2 style="color: rgb(152, 5, 5)">Recherche pour "{{ query }}" :</h2>
+    <ul>
+        {% for user in results %}
+            <div class="profile-card">
+                <img src="{{ user.profile.photo_de_profil.url }}" alt="Photo de profil" width="100">
+                <h4>{{ user.username }} - {{ user.profile.age }} ans</h4>
+                <p>{{ user.profile.localisation }}</p>
+                <button class="see-profile"><a href="{% url 'vue_profile_partenaire' user.username %}">Voir le profil</a></button>
+            </div>
+        {% empty %}
+            <li>Aucun utilisateur trouvé.</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Veuillez entrer un terme de recherche.</p>
+{% endif %}
+<a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
+
+{% endblock %}

@@ -28,9 +28,13 @@
                     <p><span>Bio :</span> {{ utilisateur.profile.bio }}</p>
                     <p><span>Nombre de J'AIME :</span> {{ utilisateur.like_recu.count }} Likes</p>
                 </div>
-                
             </section>
-            <a href="{% url 'vue_deconnexion' %}" class="p">Déconnexion</a>
+            <div class="decmod">
+                <a href="{% url 'vue_modifier_profile' %}" class="p">Modifier le Profil</a>
+                <a href="{% url 'vue_base' %}" class="p">Accueil</a>
+                <a href="{% url 'vue_deconnexion' %}" class="p">Déconnexion</a>
+            </div>
+           
         </main>
         
     </body>

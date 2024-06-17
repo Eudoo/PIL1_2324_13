@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import vue_connexion, vue_deconnexion,vue_profile, accueil, vue_inscription1, vue_inscription2
-from .views import vue_recommandations, vue_base, vue_recherche, vue_profile_partenaire, vue_like_profile
+from .views import vue_recommandations, vue_base, vue_recherche, vue_profile_partenaire, vue_like_profile, vue_modifier_profile
 
 
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('recherche/', vue_recherche, name='vue_recherche'),
     path('profil/<str:username>/', vue_profile_partenaire, name='vue_profile_partenaire'),
     path('like/<int:user_id>/', vue_like_profile, name='vue_like_profile'),
+    path('profile/modifier/', vue_modifier_profile, name='vue_modifier_profile'),
 ]

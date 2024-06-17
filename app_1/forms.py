@@ -34,7 +34,7 @@ class Inscription2Form(forms.ModelForm):
     sexe = forms.ChoiceField(choices=[('Homme', 'Homme'), ('Femme', 'Femme'), ('Autre', 'Autre')], widget=forms.Select(attrs={'class': 'form-control'}))
     interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=True)
     photo_de_profil = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
-    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=True)
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 2}), required=True)
     localisation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
     
     class Meta:
@@ -97,3 +97,41 @@ class RechercheForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(RechercheForm, self).__init__(*args, **kwargs)
         self.fields['interets'].queryset = Interest.objects.all()
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['age', 'sexe', 'bio', 'localisation', 'interet', 'photo_de_profil']
+        widgets = {
+            'interet': forms.CheckboxSelectMultiple(),
+        }
+
+class UserProfileForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, required=True)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = Profile
+        fields = ['username', 'email', 'age', 'sexe', 'bio', 'localisation', 'interet', 'photo_de_profil']
+        widgets = {
+            'interet': forms.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['username'].initial = user.username
+            self.fields['email'].initial = user.email
+
+    def save(self, commit=True):
+        user = super(UserProfileForm, self).save(commit=False)
+        user.username = self.cleaned_data['username']
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user

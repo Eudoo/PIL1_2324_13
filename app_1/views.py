@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm, RechercheForm
+from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm, RechercheForm, UserProfileForm
 from .recommendations import recommander_partenaires
 from .models import Like, Profile, Interest
 
@@ -70,13 +70,16 @@ def vue_connexion(request):
         form = ConnexionUserForm()
     return render(request, 'connexion.html', {'form': form})
 
+@login_required
 def vue_deconnexion(request):
     logout(request)
     return redirect('vue_connexion')
 
+@login_required
 def vue_profile(request):
     return render(request, 'profile.html', {'utilisateur': request.user})
 
+@login_required
 def vue_recommandations(request):
     utilisateur = request.user
     recommandations = recommander_partenaires(utilisateur)
@@ -93,6 +96,7 @@ def vue_base(request):
     form = RechercheForm()
     return render(request, 'base.html', {'form': form})
 
+@login_required
 def vue_recherche(request):
     form = RechercheForm(request.GET or None)
     results = Profile.objects.all()
@@ -117,13 +121,30 @@ def vue_recherche(request):
         'form': form,
     })
 
+@login_required
 def vue_profile_partenaire(request, username):
     utilisateur = get_object_or_404(User, username=username)
     return render(request, 'profile_partenaire.html', {'utilisateur': utilisateur})
 
+@login_required
 def vue_like_profile(request, user_id):
     user_to_like = get_object_or_404(User, id=user_id)
     like, created = Like.objects.get_or_create(liker=request.user, liked=user_to_like)
     if not created:
         like.delete()
     return redirect('vue_recommandations')
+
+@login_required
+def vue_modifier_profile(request):
+    profile = Profile.objects.get(utilisateur=request.user)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+        if form.is_valid():
+            form.save()
+            request.user.username = form.cleaned_data['username']
+            request.user.email = form.cleaned_data['email']
+            request.user.save()
+            return redirect('vue_profile')
+    else:
+        form = UserProfileForm(instance=profile, user=request.user)
+    return render(request, 'modifier_profile.html', {'form': form})

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'chatapp/css/message.css' %}">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script src="{% static "chatapp/js/jquery.min.js" %}"></script>
     <title>{{ user2.username }}| Love Alarm ©</title>
 </head>
 <body>
@@ -52,17 +53,14 @@
             <div id="scrollableDiv" class="chat-container">
                 <div class="messages" id="chat-log">
                     {% for message in messages %}
-                        <div class="message {% if message.sender == user1 %}user1{% else %}user2{% endif %}">
+                        <div class="message {% if message.sender == user1 %}user1{% else %}user2{% endif %}" data-message-id="{{ message.id }}">
                             {{ message.content }} <br>
                             <div class="small"><small>{{ message.date }}</small></div>
                         </div>
                     {% endfor %}
                 </div>
-            </id=>
+            </div>
             <div class="envoie">
-                <div class="d1">
-                    <button class="scroll" onclick="scrollToBottom()">Scroll Down</button>
-                </div>
                 <div class="d2">
                     <form id="chat-form"  method="POST" action="">
                         {% csrf_token %}
@@ -75,8 +73,41 @@
             </div>
         </div>
     </main>
+<script>
+    // Fonction pour envoyer une requête toutes les secondes
+    function refreshMessages() {
+        setTimeout(function() {
+            // Récupérer l'ID du dernier message affiché
+            var lastMessageId = $('.messages .message:last').data('message-id');
 
-    <script src="{% static "chatapp/js/script.js" %}"></script>
+            // Envoyer une requête AJAX pour obtenir de nouveaux messages
+            $.ajax({
+                url: window.location.pathname + '?last_message_id=' + lastMessageId,
+                success: function(data) {
+                    // Ajouter les nouveaux messages à la fin de la liste
+                    $('.messages').append(data);
+                    // Faire défiler vers le bas
+                    scrollToBottom();
+                    // Actualiser à nouveau après une seconde
+                    refreshMessages();
+                }
+            });
+        }, 1000); // Actualiser toutes les 1000 ms (1 seconde)
+    }
 
+    // Appeler la fonction pour la première fois
+    refreshMessages();
+
+    // Fonction pour faire défiler vers le bas
+    function scrollToBottom() {
+        var chatLog = document.getElementById('scrollableDiv');
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // Faire défiler vers le bas lorsque la page est chargée
+    window.onload = function() {
+        scrollToBottom();
+    };
+</script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Messages</title>
+</head>
+<body>
+    {% for message in messages %}
+        <div class="message {% if message.sender == user1 %}user1{% else %}user2{% endif %}" data-message-id="{{ message.id }}">
+            {{ message.content }} <br>
+            <div class="small"><small>{{ message.date }}</small></div>
+        </div>
+    {% endfor %}
+</body>
+</html>

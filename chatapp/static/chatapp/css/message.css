@@ -269,7 +269,8 @@ form button {
     }
 }
 #messageInput{
-    width: 650px;
+    width: 770px;
+
 }
 .chat-container {
     font-family: Arial, sans-serif;
@@ -314,7 +315,4 @@ form button {
 }
 .profile img {
     border-radius: 50%;
-}
-.scroll{
-    margin-left: 10px;
 }

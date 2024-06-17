@@ -16,6 +16,7 @@
             <p>{{ recommandation.bio }}</p>
             <div class="button">
                 <button><a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a></button>
+                <button><a href="{% url 'chat' recommandation.utilisateur.username %}">Envoyer un message</a></button>
                 <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit">

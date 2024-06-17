@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm
+from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm, RechercheForm
 from .recommendations import recommander_partenaires
-from .models import Like
+from .models import Like, Profile, Interest
 
 User = get_user_model()
 
@@ -90,15 +90,32 @@ def vue_recommandations(request):
 
 @login_required
 def vue_base(request):
-    return render(request, 'base.html')
+    form = RechercheForm()
+    return render(request, 'base.html', {'form': form})
 
 def vue_recherche(request):
-    query = request.GET.get('q')
-    if query:
-        results = User.objects.filter(username__icontains=query)
-    else:
-        results = User.objects.none()
-    return render(request, 'recherche.html', {'results':results, 'query':query})
+    form = RechercheForm(request.GET or None)
+    results = Profile.objects.all()
+
+    if form.is_valid():
+        query = form.cleaned_data.get('q')
+        ville = form.cleaned_data.get('ville')
+        sexe = form.cleaned_data.get('sexe')
+        interets = form.cleaned_data.get('interets')
+
+        if query:
+            results = results.filter(utilisateur__username__icontains=query)
+        if ville:
+            results = results.filter(localisation__icontains=ville)
+        if sexe:
+            results = results.filter(sexe=sexe)
+        if interets:
+            results = results.filter(interet__in=interets).distinct()
+
+    return render(request, 'recherche.html', {
+        'results': results,
+        'form': form,
+    })
 
 def vue_profile_partenaire(request, username):
     utilisateur = get_object_or_404(User, username=username)

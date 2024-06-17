@@ -69,8 +69,7 @@ footer p {
     margin-bottom: 5px;
 }
 
-.form-group input,
-.form-group select {
+.form-group input {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 5px 0;

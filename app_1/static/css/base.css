@@ -50,14 +50,7 @@ main {
     margin: 20px auto;
 }
 
-.sidebar {
-    width: 25%;
-    height: 400px;
-    background-color: rgb(252, 226, 226);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 .search input {
     width: calc(100% - 22px);
@@ -133,7 +126,7 @@ main {
 
 }
 
-.profile-card .button a{
+.profile-card .button a {
     text-decoration: none;
     color: white;
 }

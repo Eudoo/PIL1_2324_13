@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,16 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Alarm - Rencontrez des membres</title>
     {% load static %}
-    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
+    <style>
+        .search select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid blue;
+            border-radius: 5px;
+        }
+
+        #interets {
+            margin-top: 5px;
+        }
+        .search input[type="checkbox"] {
+            width: 10%;    
+        }
+
+        .sidebar {
+            width: 25%;
+            height: 100%;
+            background-color: rgb(252, 226, 226);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
     <header>
         <div class="container">
-            <strong > <h1  style="color: rgb(152, 5, 5) " style="logo">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1></strong>
+            <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
             <nav>
+                <a href="{% url 'vue_base' %}">Accueil</a>
                 <a href="{% url 'vue_profile' %}">Profil</a>
                 <a href="{% url 'vue_recommandations' %}">Recommandations</a>
+                <a href="{% url 'discussion' %}">Messages</a>
                 <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
             </nav>
         </div>
@@ -24,17 +50,15 @@
     <main>
         <aside class="sidebar">
             <h2>Rechercher des membres</h2>
-            <form action="{% url 'vue_recherche' %}" method="get" class="search">
-                <input type="text" name="q" placeholder="Rechercher un utilisateur">
+            <form action="{% url 'vue_recherche' %}" method="GET" class="search">
+                {{ form.as_p }}      
                 <button type="submit">Rechercher</button>
             </form>
         </aside>
         <section class="main-content">
-            
             {% block content %}
             <!-- Contenu spécifique de chaque page sera inséré ici -->
             {% endblock %}
-
             <div class="profile-card">
                 <img src="terre.jpg" alt="Profil 1">
                 <h3>Alice, 25</h3>
@@ -44,16 +68,14 @@
             <div class="profile-card">
                 <img src="couplerouge.jpg" alt="Profil 2">
                 <h3>David, 29</h3>
-                <p>porto-novo, Bénin</p>
+                <p>Porto-Novo, Bénin</p>
                 <button>Envoyer un message</button>
             </div>
-            
         </section>
-        
     </main>
     <footer>
         <div class="container">
-            <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶- Le site de rencontre qui sonne votre amour</p>
+            <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶 - Le site de rencontre qui sonne votre amour</p>
             <nav>
                 <a href="#">À propos</a>
                 <a href="#">Contact</a>

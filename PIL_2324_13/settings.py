@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_1',
+    'channels',
+    'chatapp',
 ]
 
 
@@ -86,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'database_pil_13',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'eudes',
+        'PASSWORD': 'ciccada3301',
         'HOST': 'localhost',
         'PORT': '3306',
     }

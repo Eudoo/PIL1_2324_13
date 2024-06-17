@@ -10,9 +10,14 @@
 </head>
 <body>
     <header>
-        <div class="titre">
-            <h1><a href="">LOVE ALARM</a></h1>
-        </div>
+        <h1 style="color: rgb(244, 193, 193);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+        <nav>
+            <a href="{% url 'vue_base' %}">Accueil</a>
+            <a href="{% url 'vue_profile' %}">Profil</a>
+            <a href="{% url 'vue_recommandations' %}">Recommandations</a>
+            <a href="{% url 'discussion' %}">Messages</a>
+            <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
+        </nav>
     </header>
 
     <main class="global">

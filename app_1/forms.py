@@ -57,7 +57,7 @@ class Inscription2Form(forms.ModelForm):
         self.fields['localisation'].widget.attrs.update({'class': 'form-control'})
     
 class ConnexionUserForm(forms.Form):
-    pseudo = forms.CharField(label='Pseudo ou Email', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pseudo = forms.CharField(label='Pseudo', widget=forms.TextInput(attrs={'class': 'form-control'}))
     mot_de_passe = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     def clean(self):
@@ -87,3 +87,13 @@ class ConnexionUserForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+class RechercheForm(forms.Form):
+    q = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Rechercher un utilisateur', 'class': 'form-control'}), label='')
+    ville = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Spécifier une ville', 'class': 'form-control'}), label='')
+    sexe = forms.ChoiceField(required=False, choices=[('', 'Sélectionnez le sexe'), ('Homme', 'Homme'), ('Femme', 'Femme'), ('Autre', 'Autre')], widget=forms.Select(attrs={'class': 'form-control'}), label='')
+    interets = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), label='Sélectionnez les intérêts', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(RechercheForm, self).__init__(*args, **kwargs)
+        self.fields['interets'].queryset = Interest.objects.all()

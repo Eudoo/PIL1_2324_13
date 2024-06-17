@@ -4,40 +4,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Alarm-connexion</title>
+    <title>Connexion - Love Alarm</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
+    <link rel="stylesheet" href="styles.css">
 </head>
+<style>
 
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("../static/images/1626.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    max-width: 400px;
+    box-sizing: border-box;
+    opacity: 0; /* Initial opacity set to 0 */
+    animation: fade-in 1s forwards; /* Animation to fade in */
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-container {
+    animation: slide-up 1s forwards; /* Animation to slide up */
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(50px); /* Start position below */
+    }
+    to {
+        transform: translateY(0); /* End position */
+    }
+}
+
+.form-group {
+    opacity: 0; /* Initial opacity set to 0 */
+    animation: fade-in-group 0.5s forwards; /* Animation to fade in */
+    animation-delay: 0.5s; /* Delay for staggered animation */
+}
+
+@keyframes fade-in-group {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+label {
+    margin-top: 10px;
+    color: black;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: rgba(0, 0, 255, 0.804);
+    text-decoration: none;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: rgb(62, 59, 160);
+}
+p a {
+    color: rgba(0, 0, 255, 0.76);
+    text-decoration: none;
+}
+</style>
 <body>
-    <div class="login-container">
-        <h1 style="color: rgb(152, 5, 5) ;">Connexion à 𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
-        <form action="" method="post">
+    <div class="container">
+        <h1 style="color: rgb(194, 22, 50);">Connexion</h1>
+        <form action="" method="post" class="form-container">
             {% csrf_token %}
-            <div class="form-group">
+            <div class="form-group" id="email-group">
                 {{ form.pseudo.label_tag }}
                 {{ form.pseudo }}
             </div>
-            <div class="form-group">
+
+            <div class="form-group" id="password-group">
                 {{ form.mot_de_passe.label_tag }}
                 {{ form.mot_de_passe }}
             </div>
-            <div class="form-group">
+
+            <div class="forgot-password">
+                <a href="mot de passe oublie.html">Mot de passe oublié ?</a>
+            </div>
+
+            <div class="button">
                 <button type="submit">Se connecter</button>
             </div>
         </form>
-
         <p>
             Vous n'avez pas de compte ?
-            <br><a href="{% url 'vue_inscription1' %}">Inscrivez-vous</a>
+            <a href="{% url 'vue_inscription1' %}">Inscrivez-vous</a>
         </p>
-
-        
     </div>
-    <footer>
-        <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶- Le site de rencontre qui sonne votre amour</p>
-    </footer>
-    
-   
+
+    <script src="script.js"></script>
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector('.container').style.opacity = '1';
+});
+</script>

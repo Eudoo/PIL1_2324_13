@@ -2,29 +2,31 @@
 
 {% block content %}
 
-{% if query %}
-    <style>
-        .see-profile a {
-            text-decoration: none;
-            color: white;
-        }
-    </style>
-    <h2 style="color: rgb(152, 5, 5)">Recherche pour "{{ query }}" :</h2>
-    <ul>
-        {% for user in results %}
-            <div class="profile-card">
-                <img src="{{ user.profile.photo_de_profil.url }}" alt="Photo de profil" width="100">
-                <h4>{{ user.username }} - {{ user.profile.age }} ans</h4>
-                <p>{{ user.profile.localisation }}</p>
-                <button class="see-profile"><a href="{% url 'vue_profile_partenaire' user.username %}">Voir le profil</a></button>
-            </div>
-        {% empty %}
-            <li>Aucun utilisateur trouvé.</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Veuillez entrer un terme de recherche.</p>
-{% endif %}
-<a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
+    <h2 style="color: rgb(152, 5, 5)">Résultats de la recherche :</h2>
+    {% if results %}
+        <ul>
+            {% for profile in results %}
+                <div class="profile-card">
+                    <img src="{{ profile.photo_de_profil.url }}" alt="Photo de profil" width="100">
+                    <h4>{{ profile.utilisateur.username }} - {{ profile.age }} ans</h4>
+                    <p>{{ profile.localisation }}</p>
+                    <p>
+                        {% for interet in profile.interet.all %}
+                            {{ interet.name }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <div class="button">
+                        <button><a href="{% url 'vue_profile_partenaire' profile.utilisateur.username %}">Voir le profil</a></button>
+                        <button><a href="{% url 'chat' profile.utilisateur.username %}">Envoyer un message</a></button>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun utilisateur trouvé.</p>
+    {% endif %}
+    <a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
 
 {% endblock %}

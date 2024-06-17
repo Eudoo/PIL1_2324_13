@@ -24,24 +24,6 @@ class Interest(models.Model):
         return self.name
 
 
-class Message(models.Model):
-    contenu = models.TextField()
-    expediteur = models.ForeignKey(User, related_name='envoie_les_messages', on_delete=models.CASCADE)
-    destinataire = models.ForeignKey(User, related_name='recoit_les_messages', on_delete=models.CASCADE)
-    heure_d_envoie = models.DateTimeField(auto_now=True)
-    conversation = models.ForeignKey('Conversation', related_name='messages', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.expediteur.username} to {self.destinataire.username}: {self.contenu[:20]}'
-
-
-class Conversation(models.Model):
-    intervenants = models.ManyToManyField(User, related_name='conversations')
-    demarree_le = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'Conversation entre {", ".join(utilisateur.username for utilisateur in self.intervenants.all())}'
-    
 class Like(models.Model):
     liker = models.ForeignKey(User, related_name='like_donné', on_delete=models.CASCADE)
     liked = models.ForeignKey(User, related_name='like_recu', on_delete=models.CASCADE)

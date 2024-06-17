@@ -1,21 +1,143 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inscription2 - Love Alarm</title>
-    {% load static %}
-    <link rel="stylesheet" href="../static/css/inscription2.css">
+    <title>Finalisez votre inscription - Love Alarm</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+<style>
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(252, 226, 226);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130vh;
+    background-image: url('../static/images/1626.jpg');
+    background-size: cover;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    box-sizing: border-box;
+    opacity: 0; /* Initial opacity set to 0 */
+    animation: fade-in 1s forwards; /* Animation to fade in */
+    margin: 100px auto;
+    max-height: 2000px;
+    max-width: 500px;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-container {
+    animation: slide-up 1s forwards; /* Animation to slide up */
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(50px); /* Start position below */
+    }
+    to {
+        transform: translateY(0); /* End position */
+    }
+}
+
+.form-group {
+    opacity: 0; /* Initial opacity set to 0 */
+    animation: fade-in-group 0.5s forwards; /* Animation to fade in */
+    animation-delay: 0.5s; /* Delay for staggered animation */
+}
+
+@keyframes fade-in-group {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+label {
+    margin-top: 10px;
+    color: black;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+textarea,
+select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#passions {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #1b0ff8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #e04a4f;
+}
+
+</style>
 <body>
-    <div class="container">
-        <h1>Finalisez votre inscription sur 𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
-        <form method="post" enctype="multipart/form-data" novalidate></formmethod>
-            {% csrf_token %}
+    
+    <form method="post" enctype="multipart/form-data" class="container" novalidate>
+        {% csrf_token %}
+        <h1>Finalisez votre inscription</h1>
+        <div class="form-container">
             {{ form.as_p }}
             <button type="submit">S'inscrire</button>
-        </form>
-    </div>
+        </div>
+    </form>
+
+    <script src="script.js"></script>
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector('.container').style.opacity = '1';
+});
+</script>

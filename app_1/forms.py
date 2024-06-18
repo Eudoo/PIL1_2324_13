@@ -1,6 +1,9 @@
+from typing import Any, Mapping
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.forms.renderers import BaseRenderer
+from django.forms.utils import ErrorList
 from .models import Profile, Interest
 from django.contrib.auth import get_user_model
 
@@ -41,48 +44,52 @@ class Inscription2Form(forms.ModelForm):
         model = Profile
         fields = ['username','age', 'sexe', 'interet', 'photo_de_profil', 'bio', 'localisation']
 
-    interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=True)
-    photo_de_profil = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
-    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=True)
-    localisation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
+    #interet = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}), required=True)
+    #photo_de_profil = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
+    #bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=True)
+    #localisation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
 
     def __init__(self, *args, **kwargs):
         super(Inscription2Form, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        '''self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['age'].widget.attrs.update({'class': 'form-control'})
         self.fields['sexe'].widget.attrs.update({'class': 'form-control'})
         self.fields['interet'].widget.attrs.update({'class': 'form-control'})
         self.fields['photo_de_profil'].widget.attrs.update({'class': 'form-control'})
         self.fields['bio'].widget.attrs.update({'class': 'form-control'})
-        self.fields['localisation'].widget.attrs.update({'class': 'form-control'})
+        self.fields['localisation'].widget.attrs.update({'class': 'form-control'})'''
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Ce pseudo est déjà utilisé. Veuillez choisir un autre pseudo.")
+        return username
     
 class ConnexionUserForm(forms.Form):
     pseudo = forms.CharField(label='Pseudo', widget=forms.TextInput(attrs={'class': 'form-control'}))
     mot_de_passe = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+    def __init__(self, *args, **kwargs):
+        self.user_cache = None
+        super().__init__(*args, **kwargs)
+
     def clean(self):
         cleaned_data = super().clean()
-        pseudo_email = cleaned_data.get('pseudo')
+        pseudo = cleaned_data.get('pseudo')
         mot_de_passe = cleaned_data.get('mot_de_passe')
 
-        if pseudo_email and mot_de_passe:
-            # Authentification par pseudo ou email
-            user = authenticate(username=pseudo_email, password=mot_de_passe)
-            if user is None:
-                try:
-                    user = Utilisateur.objects.get(email=pseudo_email)
-                    if not user.check_password(mot_de_passe):
-                        raise forms.ValidationError("Mot de passe incorrect")
-                    user = authenticate(username=user.username, password=mot_de_passe)
-                except Utilisateur.DoesNotExist:
-                    raise forms.ValidationError("Pseudo ou Email incorrect")
-            self.user_cache = user
+        if pseudo and mot_de_passe:
+            try:
+                user = User.objects.get(username=pseudo)
+                if not user.check_password(mot_de_passe):
+                    raise forms.ValidationError("Pseudo ou mot de passe incorrect.")
+                self.user_cache = authenticate(username=pseudo, password=mot_de_passe)
+                if self.user_cache is None:
+                    raise forms.ValidationError("Pseudo ou mot de passe incorrect.")
+            except User.DoesNotExist:
+                raise forms.ValidationError("Aucun compte ne possède ce pseudo.")
         else:
-            raise forms.ValidationError("Veuillez entrer à la fois le pseudo/email et le mot de passe")
-
-        if self.user_cache is None:
-            raise forms.ValidationError("Impossible de se connecter avec les informations fournies.")
-
+            raise forms.ValidationError("Veuillez entrer à la fois le pseudo et le mot de passe.")
+                
         return cleaned_data
 
     def get_user(self):

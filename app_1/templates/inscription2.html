@@ -128,6 +128,14 @@ button:hover {
         {% csrf_token %}
         <h1>Finalisez votre inscription</h1>
         <div class="form-container">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
             {{ form.as_p }}
             <button type="submit">S'inscrire</button>
         </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from .forms import Inscription1Form, Inscription2Form, ConnexionUserForm, RechercheForm, UserProfileForm
 from .recommendations import recommander_partenaires
 from .models import Like, Profile, Interest
@@ -48,6 +49,7 @@ def vue_inscription2(request):
             backend = 'django.contrib.auth.backends.ModelBackend'
 
             login(request, user, backend=backend)
+
             return redirect('vue_connexion')
     else:
         form = Inscription2Form()
@@ -63,9 +65,10 @@ def vue_connexion(request):
                 login(request, utilisateur)
                 return redirect('vue_base')
             else:
-                print("Utilisateur non trouvé")
+                messages.error(request, "Erreur d'authentification. Veuillez réessayer.")
         else:
-            print("Formulaire invalide : ", form.errors)
+            for error in form.errors.values():
+                messages.error(request, error)
     else:
         form = ConnexionUserForm()
     return render(request, 'connexion.html', {'form': form})

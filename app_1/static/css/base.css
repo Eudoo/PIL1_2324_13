@@ -150,3 +150,53 @@ footer nav a {
     text-decoration: none;
 }
 
+
+@media (max-width: 1200px) {
+    .main-content, .sidebar {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    nav a, nav button {
+        padding: 5px 10px;
+        margin: 0 5px;
+    }
+    main {
+        flex-direction: row;
+        align-items: center;
+    }
+    .profile-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        text-align: center;
+    }
+    .header-container {
+        flex-direction: column;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    nav a, nav button {
+        margin: 5px 0;
+    }
+    .profile-card img {
+        width: 100px;
+        height: 100px;
+    }
+    .profile-card h3, .profile-card h4 {
+        font-size: 16px;
+    }
+    .profile-card button {
+        padding: 5px;
+        font-size: 14px;
+    }
+}

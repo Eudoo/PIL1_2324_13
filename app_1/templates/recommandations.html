@@ -1,35 +1,33 @@
-{% extends "base.html" %}
 
-{% block content %}
-<h2 style="color: rgb(152, 5, 5) ;">Personnes suggérées</h2>
-<ul>
-    {% for recommandation, has_liked in recommandations_data %}
-        <div class="profile-card">
-            <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
-            <h3><p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p></h3>
-            <p>{{ recommandation.sexe }}</p>
-            <p><span>Intérêts:</span> 
-                {% for interet in recommandation.interet.all %}
-                    {{ interet.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            <p>{{ recommandation.bio }}</p>
-            <div class="button">
-                <button><a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a></button>
-                <button><a href="{% url 'chat' recommandation.utilisateur.username %}">Envoyer un message</a></button>
-                <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">
-                        {% if has_liked %}
-                            Je n'aime plus
-                        {% else %}
-                            J'aime
-                        {% endif %}
-                    </button>
-                </form>
+    <h2 style="color: rgb(152, 5, 5) ;">Personnes suggérées</h2>
+    <ul>
+        {% for recommandation, has_liked in recommandations_data %}
+            <div class="profile-card">
+                <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
+                <h3><p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p></h3>
+                <p>{{ recommandation.sexe }}</p>
+                <p><span>Intérêts:</span> 
+                    {% for interet in recommandation.interet.all %}
+                        {{ interet.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p>{{ recommandation.bio }}</p>
+                <div class="button">
+                    <button><a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a></button>
+                    <button><a href="{% url 'chat' recommandation.utilisateur.username %}">Envoyer un message</a></button>
+                    <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">
+                            {% if has_liked %}
+                                Je n'aime plus
+                            {% else %}
+                                J'aime
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+                
             </div>
-            
-        </div>
-    {% endfor %}
-</ul>
-{% endblock %}
+        {% endfor %}
+    </ul>
+

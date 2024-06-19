@@ -41,7 +41,7 @@
             <nav>
                 <a href="{% url 'vue_base' %}">Accueil</a>
                 <a href="{% url 'vue_profile' %}">Profil</a>
-                <a href="{% url 'vue_recommandations' %}">Recommandations</a>
+                <a href="{% url 'vue_recommandations' %}" id="recommendations-link">Recommandations</a>
                 <a href="{% url 'discussion' %}">Messages</a>
                 <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
             </nav>
@@ -56,32 +56,35 @@
             </form>
         </aside>
         <section class="main-content">
-            {% block content %}
-            <!-- Contenu spécifique de chaque page sera inséré ici -->
-            {% endblock %}
-            <div class="profile-card">
-                <img src="terre.jpg" alt="Profil 1">
-                <h3>Alice, 25</h3>
-                <p>Calavi, Bénin</p>
-                <button>Envoyer un message</button>
+
+            <div id="block-content" style="display: none;">
+                <!-- Contenu spécifique de chaque page sera inséré ici -->
+                {% include 'recommandations.html' %}
             </div>
-            <div class="profile-card">
-                <img src="couplerouge.jpg" alt="Profil 2">
-                <h3>David, 29</h3>
-                <p>Porto-Novo, Bénin</p>
-                <button>Envoyer un message</button>
+
+            <div id="profile-cards">
+                <div class="profile-card">
+                    <img src="terre.jpg" alt="Profil 1">
+                    <h3>Alice, 25</h3>
+                    <p>Calavi, Bénin</p>
+                    <button>Envoyer un message</button>
+                </div>
+                <div class="profile-card">
+                    <img src="couplerouge.jpg" alt="Profil 2">
+                    <h3>David, 29</h3>
+                    <p>Porto-Novo, Bénin</p>
+                    <button>Envoyer un message</button>
+                </div>
             </div>
+            
+
         </section>
     </main>
     <footer>
         <div class="container">
             <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶 - Le site de rencontre qui sonne votre amour</p>
-            <nav>
-                <a href="#">À propos</a>
-                <a href="#">Contact</a>
-                <a href="#">Confidentialité</a>
-            </nav>
         </div>
     </footer>
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

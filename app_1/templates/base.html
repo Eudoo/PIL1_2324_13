@@ -6,6 +6,7 @@
     <title>Love Alarm - Rencontrez des membres</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -43,6 +44,7 @@
                 <a href="{% url 'vue_profile' %}">Profil</a>
                 <a href="{% url 'vue_recommandations' %}" id="recommendations-link">Recommandations</a>
                 <a href="{% url 'discussion' %}">Messages</a>
+                <a href="{% url 'notifications' %}">Notifications</a>
                 <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
             </nav>
         </div>

@@ -17,6 +17,7 @@
             <a href="{% url 'vue_profile' %}">Profil</a>
             <a href="{% url 'vue_recommandations' %}">Recommandations</a>
             <a href="{% url 'discussion' %}">Messages</a>
+            <a href="{% url 'notifications' %}">Notifications</a>
             <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
         </nav>
     </header>
@@ -74,31 +75,26 @@
         </div>
     </main>
 <script>
-    // Fonction pour envoyer une requête toutes les secondes
+    
     function refreshMessages() {
         setTimeout(function() {
-            // Récupérer l'ID du dernier message affiché
+        
             var lastMessageId = $('.messages .message:last').data('message-id');
 
-            // Envoyer une requête AJAX pour obtenir de nouveaux messages
+            
             $.ajax({
                 url: window.location.pathname + '?last_message_id=' + lastMessageId,
                 success: function(data) {
-                    // Ajouter les nouveaux messages à la fin de la liste
                     $('.messages').append(data);
-                    // Faire défiler vers le bas
                     scrollToBottom();
-                    // Actualiser à nouveau après une seconde
                     refreshMessages();
                 }
             });
-        }, 1000); // Actualiser toutes les 1000 ms (1 seconde)
+        }, 1000);
     }
 
-    // Appeler la fonction pour la première fois
     refreshMessages();
 
-    // Fonction pour faire défiler vers le bas
     function scrollToBottom() {
         var chatLog = document.getElementById('scrollableDiv');
         chatLog.scrollTop = chatLog.scrollHeight;

@@ -7,6 +7,7 @@
         <title>Profil</title>
         {% load static %}
         <link rel="stylesheet" href="../static/css/profile.css">
+        <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     </head>
 
     <body>
@@ -19,7 +20,7 @@
                     <p><span>Email :</span> {{ utilisateur.email }}</p>
                     <p><span>Age :</span> {{ utilisateur.profile.age }} ans</p>
                     <p><span>Sexe :</span> {{ utilisateur.profile.sexe }}</p>
-                    <p><span>Intérêts :</span> 
+                    <p><span>Intérêts :</span>
                         {% for interet in utilisateur.profile.interet.all %}
                             {{ interet.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
@@ -34,8 +35,7 @@
                 <a href="{% url 'vue_base' %}" class="p">Accueil</a>
                 <a href="{% url 'vue_deconnexion' %}" class="p">Déconnexion</a>
             </div>
-           
         </main>
-        
+
     </body>
 </html>

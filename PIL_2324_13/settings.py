@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'app_1',
     'chatapp',
-    'channels',
 ]
 
 
@@ -78,9 +78,17 @@ TEMPLATES = [
         },
     },
 ]
-
+ASGI_APPLICATION = 'PIL_2324_13.asgi.application'
 WSGI_APPLICATION = 'PIL_2324_13.wsgi.application'
 
+CHANNELS_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

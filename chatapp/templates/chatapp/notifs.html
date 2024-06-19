@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <h1>Notifications</h1>
+    <ul id="notification-list">
+        {% for notification in notifications %}
+        <li>{{ notification.sender }}: {{ notification.content }} ({{ notification.date }})</li>
+        {% endfor %}
+    </ul>
+
+
+
+    <script src="{% static 'chatapp/js/jquery2.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+
+            function loadNotifications() {
+                $.ajax({
+                    url: '{% url "get_notifications" %}', 
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#notification-list').empty();
+                        $.each(data.notifications, function(index, notification) {
+                            $('#notification-list').append('<li>Vous avez reçu un message de ' + notification.sender + ': "' + notification.content + '" ' + notification.date + '</li>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erreur lors du chargement des notifications:', error);
+                    }
+                });
+            }
+
+            
+            loadNotifications();
+
+            // Actualise les notifications toutes les 10 secondes (par exemple)
+            setInterval(function() {
+                loadNotifications();
+            }, 10000); 
+        });
+    </script>
+</body>
+</html>

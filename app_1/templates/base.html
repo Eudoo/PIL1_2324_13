@@ -42,7 +42,7 @@
             <nav>
                 <a href="{% url 'vue_base' %}">Accueil</a>
                 <a href="{% url 'vue_profile' %}">Profil</a>
-                <a href="{% url 'vue_recommandations' %}" id="recommendations-link">Recommandations</a>
+                <a href="{% url 'vue_recommandations' %}">Recommandations</a>
                 <a href="{% url 'discussion' %}">Messages</a>
                 <a href="{% url 'notifications' %}">Notifications</a>
                 <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
@@ -58,12 +58,6 @@
             </form>
         </aside>
         <section class="main-content">
-
-            <div id="block-content" style="display: none;">
-                <!-- Contenu spécifique de chaque page sera inséré ici -->
-                {% include 'recommandations.html' %}
-            </div>
-
             <div id="profile-cards">
                 <div class="profile-card">
                     <img src="terre.jpg" alt="Profil 1">
@@ -78,8 +72,6 @@
                     <button>Envoyer un message</button>
                 </div>
             </div>
-            
-
         </section>
     </main>
     <footer>
@@ -87,6 +79,5 @@
             <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶 - Le site de rencontre qui sonne votre amour</p>
         </div>
     </footer>
-    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

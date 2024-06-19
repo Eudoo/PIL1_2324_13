@@ -1,33 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Alarm - Rencontrez des membres</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+</head>
 
-    <h2 style="color: rgb(152, 5, 5) ;">Personnes suggérées</h2>
-    <ul>
-        {% for recommandation, has_liked in recommandations_data %}
-            <div class="profile-card">
-                <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
-                <h3><p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p></h3>
-                <p>{{ recommandation.sexe }}</p>
-                <p><span>Intérêts:</span> 
-                    {% for interet in recommandation.interet.all %}
-                        {{ interet.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
-                <p>{{ recommandation.bio }}</p>
-                <div class="button">
-                    <button><a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a></button>
-                    <button><a href="{% url 'chat' recommandation.utilisateur.username %}">Envoyer un message</a></button>
-                    <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">
-                            {% if has_liked %}
-                                Je n'aime plus
-                            {% else %}
-                                J'aime
-                            {% endif %}
-                        </button>
-                    </form>
-                </div>
-                
-            </div>
-        {% endfor %}
-    </ul>
+<body>
+    <style>
+        .search select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid blue;
+            border-radius: 5px;
+        }
 
+        #interets {
+            margin-top: 5px;
+        }
+        .search input[type="checkbox"] {
+            width: 10%;    
+        }
+
+        .sidebar {
+            width: 25%;
+            height: 100%;
+            background-color: rgb(252, 226, 226);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+    <header>
+        <div class="container">
+            <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+            <nav>
+                <a href="{% url 'vue_base' %}">Accueil</a>
+                <a href="{% url 'vue_profile' %}">Profil</a>
+                <a href="{% url 'vue_recommandations' %}" >Recommandations</a>
+                <a href="{% url 'discussion' %}">Messages</a>
+                <a href="{% url 'notifications' %}">Notifications</a>
+                <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <aside class="sidebar">
+            <h2>Rechercher des membres</h2>
+            <form action="{% url 'vue_recherche' %}" method="GET" class="search">
+                {{ form.as_p }}      
+                <button type="submit">Rechercher</button>
+            </form>
+        </aside>
+        <section class="main-content">
+            <h2 style="color: rgb(152, 5, 5) ;">Personnes suggérées</h2>
+            <ul>
+                {% for recommandation, has_liked in recommandations_data %}
+                    <div class="profile-card">
+                        <img src="{{ recommandation.photo_de_profil.url }}" alt="Photo de profil" width="100">
+                        <h3><p>{{ recommandation.utilisateur.username }} - {{ recommandation.age }} ans</p></h3>
+                        <p>{{ recommandation.sexe }}</p>
+                        <p><span>Intérêts:</span> 
+                            {% for interet in recommandation.interet.all %}
+                                {{ interet.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p>{{ recommandation.bio }}</p>
+                        <div class="button">
+                            <button><a href="{% url 'vue_profile_partenaire' recommandation.utilisateur.username %}">Voir le profil</a></button>
+                            <button><a href="{% url 'chat' recommandation.utilisateur.username %}">Envoyer un message</a></button>
+                            <form action="{% url 'vue_like_profile' recommandation.utilisateur.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    {% if has_liked %}
+                                        Je n'aime plus
+                                    {% else %}
+                                        J'aime
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶 - Le site de rencontre qui sonne votre amour</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

@@ -84,6 +84,7 @@ def vue_profile(request):
 
 @login_required
 def vue_recommandations(request):
+    form = RechercheForm()
     utilisateur = request.user
     recommandations = recommander_partenaires(utilisateur)
 
@@ -91,8 +92,8 @@ def vue_recommandations(request):
     for recommandation in recommandations:
         has_liked = Like.objects.filter(liker=request.user, liked=recommandation.utilisateur).exists()
         recommandations_data.append((recommandation, has_liked))
-        
-    return render(request, 'recommandations.html', {'recommandations_data':recommandations_data})
+
+    return render(request, 'recommandations.html',{'form': form, 'recommandations_data':recommandations_data})
 
 @login_required
 def vue_base(request):
@@ -104,6 +105,7 @@ def vue_base(request):
     for recommandation in recommandations:
         has_liked = Like.objects.filter(liker=request.user, liked=recommandation.utilisateur).exists()
         recommandations_data.append((recommandation, has_liked))
+
     return render(request, 'base.html', {'form': form, 'recommandations_data':recommandations_data})
 
 @login_required
@@ -126,10 +128,7 @@ def vue_recherche(request):
         if interets:
             results = results.filter(interet__in=interets).distinct()
 
-    return render(request, 'recherche.html', {
-        'results': results,
-        'form': form,
-    })
+    return render(request, 'recherche.html', {'results': results,'form': form,})
 
 @login_required
 def vue_profile_partenaire(request, username):

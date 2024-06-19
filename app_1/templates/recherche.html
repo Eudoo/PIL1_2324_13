@@ -1,32 +1,98 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Alarm - Rencontrez des membres</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+</head>
 
-{% block content %}
+<body>
+    <style>
+        .search select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid blue;
+            border-radius: 5px;
+        }
 
-    <h2 style="color: rgb(152, 5, 5)">Résultats de la recherche :</h2>
-    {% if results %}
-        <ul>
-            {% for profile in results %}
-                <div class="profile-card">
-                    <img src="{{ profile.photo_de_profil.url }}" alt="Photo de profil" width="100">
-                    <h4>{{ profile.utilisateur.username }} - {{ profile.age }} ans</h4>
-                    <p>{{ profile.localisation }}</p>
-                    <p>
-                        {% for interet in profile.interet.all %}
-                            {{ interet.name }}
-                            {% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
-                    <div class="button">
-                        <button><a href="{% url 'vue_profile_partenaire' profile.utilisateur.username %}">Voir le profil</a></button>
-                        <button><a href="{% url 'chat' profile.utilisateur.username %}">Envoyer un message</a></button>
-                    </div>
-                    
-                </div>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun utilisateur trouvé.</p>
-    {% endif %}
-    <a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
+        #interets {
+            margin-top: 5px;
+        }
+        .search input[type="checkbox"] {
+            width: 10%;    
+        }
 
-{% endblock %}
+        .sidebar {
+            width: 25%;
+            height: 100%;
+            background-color: rgb(252, 226, 226);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+    <header>
+        <div class="container">
+            <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+            <nav>
+                <a href="{% url 'vue_base' %}">Accueil</a>
+                <a href="{% url 'vue_profile' %}">Profil</a>
+                <a href="{% url 'vue_recommandations' %}" id="recommendations-link">Recommandations</a>
+                <a href="{% url 'discussion' %}">Messages</a>
+                <a href="{% url 'notifications' %}">Notifications</a>
+                <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <aside class="sidebar">
+            <h2>Rechercher des membres</h2>
+            <form action="{% url 'vue_recherche' %}" method="GET" class="search">
+                {{ form.as_p }}      
+                <button type="submit">Rechercher</button>
+            </form>
+        </aside>
+        <section class="main-content">
+
+            <h2 style="color: rgb(152, 5, 5)">Résultats de la recherche :</h2>
+            {% if results %}
+                <ul>
+                    {% for profile in results %}
+                        <div class="profile-card">
+                            <img src="{{ profile.photo_de_profil.url }}" alt="Photo de profil" width="100">
+                            <h4>{{ profile.utilisateur.username }} - {{ profile.age }} ans</h4>
+                            <p>{{ profile.localisation }}</p>
+                            <p>
+                                {% for interet in profile.interet.all %}
+                                    {{ interet.name }}
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                            <div class="button">
+                                <button><a href="{% url 'vue_profile_partenaire' profile.utilisateur.username %}">Voir le profil</a></button>
+                                <button><a href="{% url 'chat' profile.utilisateur.username %}">Envoyer un message</a></button>
+                            </div>
+                            
+                        </div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun utilisateur trouvé.</p>
+            {% endif %}
+            <a href="{% url 'vue_base' %}">Retour a la page d'accueil</a>
+
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶 - Le site de rencontre qui sonne votre amour</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

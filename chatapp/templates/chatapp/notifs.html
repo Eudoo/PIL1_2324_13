@@ -5,17 +5,64 @@
     <meta charset="UTF-8">
     <title>Notifications</title>
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'chatapp/css/notifs.css' %}">
 </head>
 <body>
-    <h1>Notifications</h1>
-    <ul id="notification-list">
-        {% for notification in notifications %}
-        <li>{{ notification.sender }}: {{ notification.content }} ({{ notification.date }})</li>
-        {% endfor %}
-    </ul>
+    <style>
+        .search select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid blue;
+            border-radius: 5px;
+        }
 
+        #interets {
+            margin-top: 5px;
+        }
+        .search input[type="checkbox"] {
+            width: 10%;    
+        }
 
+        .sidebar {
+            width: 25%;
+            height: 100%;
+            background-color: rgb(252, 226, 226);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+    <header>
+        <div class="container">
+            <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+            <nav>
+                <a href="{% url 'vue_base' %}">Accueil</a>
+                <a href="{% url 'vue_profile' %}">Profil</a>
+                <a href="{% url 'vue_recommandations' %}">Recommandations</a>
+                <a href="{% url 'discussion' %}">Messages</a>
+                <a href="{% url 'notifications' %}">Notifications</a>
+                <a href="{% url 'vue_deconnexion' %}">Déconnexion</a>
+            </nav>
+        </div>
+    </header>
 
+    <main>
+        
+        <section class="main-content">
+
+            <h1 style="color: rgb(152, 5, 5)">Notifications</h1>
+            <ul id="notification-list">
+                {% for notification in notifications %}
+                <li>{{ notification.sender }}: {{ notification.content }} ({{ notification.date }})</li>
+                {% endfor %}
+            </ul>
+
+        </section>
+    
+    </main>
+    
     <script src="{% static 'chatapp/js/jquery2.min.js' %}"></script>
     <script>
         $(document).ready(function() {

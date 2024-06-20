@@ -11,6 +11,10 @@
 
 <body>
     <style>
+        .feat {
+            display: flex;
+            flex-direction: column;
+        }
         .search select {
             width: 100%;
             padding: 10px;
@@ -34,6 +38,120 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        /* Animation classes */
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fadeIn {
+            animation-name: fadeIn;
+        }
+
+        /* Delay classes */
+        .delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .delay-2 {
+            animation-delay: 1s;
+        }
+
+        .delay-3 {
+            animation-delay: 1.5s;
+        }
+
+        .delay-4 {
+            animation-delay: 2s;
+        }
+
+        .delay-5 {
+            animation-delay: 2.5s;
+        }
+
+        .delay-6 {
+            animation-delay: 3s;
+        }
+
+        /* Existing styles for .main-content and .feature */
+        .main-content {
+            width: 63%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h2 {
+            text-align: center;
+            color: #b20707;
+        }
+
+        .welcome-message {
+            margin-top: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 5px solid #b20707;
+            border-radius: 5px;
+            text-align: justify;
+        }
+        .feature:hover{
+            transform: scale(1.01);
+        }
+
+        .feature-img {
+            width: 200px;
+            height: 200px;
+            margin-right: 15px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .feature h3 {
+            margin-top: 0;
+            color: #b20707;
+        }
+
+        .feature p {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Ajustements pour les petits écrans */
+        @media (max-width: 768px) {
+            .main-content {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .feature {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .feature-img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
         
     </style>
     <header>
@@ -57,22 +175,63 @@
                 <button type="submit">Rechercher</button>
             </form>
         </aside>
+
         <section class="main-content">
-            <div id="profile-cards">
-                <div class="profile-card">
-                    <img src="terre.jpg" alt="Profil 1">
-                    <h3>Alice, 25</h3>
-                    <p>Calavi, Bénin</p>
-                    <button>Envoyer un message</button>
+            <h2 class="animated fadeIn">Bienvenue {{ utilisateur.username }} !</h2>
+            <p class="animated fadeIn delay-1" style="line-height: 1.5; word-spacing: 3px;">Découvrez un monde de nouvelles rencontres et d'amitiés potentielles. Love Alarm vous offre une plateforme dynamique pour explorer et connecter avec des personnes qui partagent vos intérêts et aspirations.</p>
+            
+            <div class="welcome-message">
+                <div class="feature animated fadeIn delay-2">
+                    <img src="{% static 'images/rencontres.jpg' %}" alt="Rencontres" class="feature-img animated fadeIn delay-2">
+                    <div class="feat">
+                        <h3>Rencontrez des Partenaires Potentiels</h3>
+                        <p>Parcourez les profils et découvrez des personnes intéressantes près de chez vous. 
+                            Utilisez nos filtres de recherche pour trouver des partenaires compatibles en fonction de vos préférences.</p>
+                    </div>
                 </div>
-                <div class="profile-card">
-                    <img src="couplerouge.jpg" alt="Profil 2">
-                    <h3>David, 29</h3>
-                    <p>Porto-Novo, Bénin</p>
-                    <button>Envoyer un message</button>
+                
+                <div class="feature animated fadeIn delay-3">
+                    <img src="{% static 'images/message.jpg' %}" alt="Messagerie" class="feature-img animated fadeIn delay-3">
+                    <div class="feat">
+                        <h3>Messagerie Instantanée</h3>
+                        <p>Entrez en contact avec des membres en temps réel grâce à notre fonctionnalité de messagerie instantanée. 
+                        Échangez des messages, partagez vos pensées et faites connaissance de manière fluide et rapide.</p>
+                    </div>
+                    
+                </div>
+                
+                <div class="feature animated fadeIn delay-4">
+                    <img src="{% static 'images/recom.jpg' %}" alt="Recommandations" class="feature-img animated fadeIn delay-4">
+                    <div class="feat">
+                        <h3>Recommandations Personnalisées</h3>
+                        <p>Profitez de suggestions personnalisées basées sur vos intérêts et comportements.
+                            Nous vous aidons à trouver des correspondances qui vous ressemblent et qui partagent vos passions.</p>
+                    </div>
+                    
+                </div>
+                
+                <div class="feature animated fadeIn delay-5">
+                    <img src="{% static 'images/notif.jpg' %}" alt="Notifications" class="feature-img animated fadeIn delay-5">
+                    <div class="feat">
+                        <h3>Notifications en Temps Réel</h3>
+                        <p>Restez informé des nouvelles interactions avec notre système de notifications en temps réel.
+                             Ne manquez jamais un message ou une demande de contact.</p>
+                    </div>
+                   
+                </div>
+                
+                <div class="feature animated fadeIn delay-6">
+                    <img src="{% static 'images/profile.jpg' %}" alt="Profil" class="feature-img animated fadeIn delay-6">
+                    <div class="feat">
+                        <h3>Profil Personnalisé</h3>
+                        <p>Créez un profil attrayant qui reflète qui vous êtes. Ajoutez des photos, des descriptions et
+                         des intérêts pour vous présenter de la meilleure manière possible.</p>
+                    </div>
+                    
                 </div>
             </div>
         </section>
+        
     </main>
     <footer>
         <div class="container">

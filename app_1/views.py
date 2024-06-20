@@ -98,15 +98,7 @@ def vue_recommandations(request):
 @login_required
 def vue_base(request):
     form = RechercheForm()
-    utilisateur = request.user
-    recommandations = recommander_partenaires(utilisateur)
-
-    recommandations_data = []
-    for recommandation in recommandations:
-        has_liked = Like.objects.filter(liker=request.user, liked=recommandation.utilisateur).exists()
-        recommandations_data.append((recommandation, has_liked))
-
-    return render(request, 'base.html', {'form': form, 'recommandations_data':recommandations_data})
+    return render(request, 'base.html',{'utilisateur': request.user, 'form': form})
 
 @login_required
 def vue_recherche(request):

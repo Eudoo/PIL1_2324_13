@@ -38,7 +38,10 @@
     </style>
     <header>
         <div class="container">
-            <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="logo_love_alarm" width="80px">
+                <h1 style="color: rgb(152, 5, 5);">𝓛𝓸𝓿𝓮 𝓐𝓵𝓪𝓻𝓶</h1>
+            </div>
             <nav>
                 <a href="{% url 'vue_base' %}">Accueil</a>
                 <a href="{% url 'vue_profile' %}">Profil</a>

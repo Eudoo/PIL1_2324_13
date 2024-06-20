@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(252, 226, 226);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.forgot-password-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.forgot-password-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #9d9b9b;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input[type="email"] {
+    margin-bottom: 30px;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: rgb(249, 243, 243);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.forgot-password-container h2,
+.forgot-password-container p,
+.forgot-password-container label,
+.forgot-password-container input[type="email"],
+.forgot-password-container input[type="submit"] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.forgot-password-container.show h2,
+.forgot-password-container.show p,
+.forgot-password-container.show label,
+.forgot-password-container.show input[type="email"],
+.forgot-password-container.show input[type="submit"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.forgot-password-container h2 {
+    transition-delay: 0s;
+}
+
+.forgot-password-container p {
+    transition-delay: 0.2s;
+}
+
+.forgot-password-container label {
+    transition-delay: 0.4s;
+}
+
+.forgot-password-container input[type="email"] {
+    transition-delay: 0.6s;
+}
+
+.forgot-password-container input[type="submit"] {
+    transition-delay: 0.8s;
+}
+.buttons button {
+    background-color:  #007BFF;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+   
+</style>
+<body>
+    <div class="container">
+        <div class="forgot-password-container" id="forgotPasswordContainer">
+            
+            <h2>Mot de passe oublié</h2>
+            <p>Veuillez entrer votre adresse email.</p>
+            <form action="/send-code" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <div class="buttons">
+                    <button type="submit">Envoyer l'email de récupération</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<script>
+
+window.onload = function() {
+    document.getElementById('forgotPasswordContainer').classList.add('show');
+};
+
+document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Empêche le formulaire de soumettre de manière traditionnelle
+
+    const email = document.getElementById('email').value;
+
+    // Simule l'envoi de l'email via une requête fetch (remplacer par l'URL réelle de votre API backend)
+    fetch('/send-code', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => {
+        if (response.ok) {
+            // Redirige vers une nouvelle page après le succès
+            window.location.href = '/code-sent';
+        } else {
+            // Gère les erreurs (optionnel)
+            alert('Une erreur est survenue. Veuillez réessayer.');
+        }
+    })
+    .catch(error => {
+        // Gère les erreurs (optionnel)
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue. Veuillez réessayer.');
+    });
+});
+</script>

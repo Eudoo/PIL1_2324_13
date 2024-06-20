@@ -78,6 +78,10 @@ button:hover {
 label {
     margin-bottom: 5px;
 }
+p a {
+    color: rgba(0, 0, 255, 0.76);
+    text-decoration: none;
+}
 
 
 </style>
@@ -109,7 +113,12 @@ label {
             
             <button type="submit">Suivant</button>
         </form>
+        <p>
+            Déja inscrit ? 
+            <a href="{% url 'vue_connexion' %}">Connectez-vous</a>
+        </p>
     </div>
+    
     <script src="scripts.js"></script>
 </body>
 </html>
